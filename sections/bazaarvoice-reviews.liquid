@@ -1,0 +1,18 @@
+{% if section.settings.show_reviews_widget %}
+  {% render 'bv-ratings-reviews' %}
+  {% render 'bv-questions-answers' %}
+{% endif %}
+
+{% schema %}
+  {
+    "name": "BazaarVoice Reviews",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_reviews_widget",
+        "label": "Show reviews widget",
+        "default": true
+      }
+    ]
+  }
+{% endschema %}

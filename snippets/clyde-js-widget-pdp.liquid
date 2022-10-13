@@ -1,0 +1,104 @@
+{% assign current_variant = product.selected_or_first_available_variant %}
+<script>
+var productData = '{{ current_variant.id }}';
+
+Clyde.init(
+  {
+    key: "ck_live_Sc1B888F1uvj2Fhd",
+    onDeselectedContract: removeEventListenerClyde
+  },
+  function () {
+    Clyde.setActiveProduct(productData);
+    
+    var addToCartButton = document.querySelector(".add-to-cart");
+    addToCartButton.addEventListener("click", myAddToCartFunction); 
+  }
+);
+
+function removeEventListenerClyde() {
+  var addToCartButton = document.querySelector(".add-to-cart");
+  addToCartButton.removeEventListener("click", myAddToCartFunction);
+  setTimeout(function(){  
+    addToCartButton.click();
+  }, 100);
+}
+  
+function myAddToCartFunction() {
+  if (Clyde.checkInit() && Clyde.checkReady()) {
+    var product = Clyde.getActiveProduct();
+    var hasContracts = product && product.contracts.length > 0;
+    if (hasContracts) {
+      // Prevent your normal add-to-cart code, if necessary.
+      event.preventDefault();
+      Clyde.showModal(null, closeModalCb);
+    } 
+  }
+}
+
+function closeModalCb() {
+  var selectedContract = Clyde.getSelectedContract();
+  if (selectedContract) {
+    addClydeToCart(selectedContract);
+  }
+}
+
+function addClydeToCart(selectedContract){
+    if(document.querySelector("quantitySelector")!=null){
+      productQuantity = document.querySelector(quantitySelector).value;
+      }
+    else{
+      productQuantity = 1;
+    }
+    
+    var productName;
+    var activeVariantId = Clyde.getActiveProduct().sku;
+    if(meta.product!=null){
+      meta.product.variants.forEach(function(variant){
+        if (variant.id == activeVariantId) {
+          productName = variant.name;
+        }
+      });
+    } 
+    else{
+      productName = cartItems[selectedContract.reference].title;
+      productQuantity = cartItems[selectedContract.reference].quantity;
+    }
+    
+    setTimeout(function(){  
+      let formData = {
+       'items': [
+         {
+          quantity: productQuantity,
+          id: selectedContract.shopifyVariantId,
+          properties: {
+            Reference: selectedContract.reference,
+            Contract: selectedContract.contractHash, // This is a hashed numeric ID of a contract in our system, in case the contract is eventually deleted from Shopify.
+            Product: productName// This is NOT required, nor returned on the contract, but lets the customer see which contract goes with which product in their cart.
+          }
+         },
+         {
+           quantity: productQuantity,
+           id: {{ current_variant.id }},
+           properties: {}
+         }
+       ]
+      };
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(response => {
+        setTimeout(function(){  
+            window.location.reload();
+        }, 500); 
+        return response.json();
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });   
+     }, 500);     
+}
+</script>

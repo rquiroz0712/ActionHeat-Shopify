@@ -1,0 +1,34 @@
+{% if mfp_pdp_link != blank %}
+  {% assign link = mfp_pdp_link %}
+{% else %}
+  {% assign link = mfp_pdp_link_fallback | img_url: '1x1' | replace: '_1x1', '' %}
+{% endif %}
+<style>
+.size_guide {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #4e4e4e;
+  cursor: pointer;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  text-transform: none;
+}
+.size_guide > svg {
+  position: relative;
+  top: 3px;
+}
+</style>
+{{ 'photoswipe.css' | asset_url | stylesheet_tag }}
+                                  
+<script type="module">
+import PhotoSwipeLightbox from '{{ 'photoswipe-lightbox.esm.min.js' | asset_url }}';
+const lightbox = new PhotoSwipeLightbox({
+  gallery: '.size_guide_wrapper .size_guide',
+  pswpModule: () => import('{{ 'photoswipe.esm.min.js' | asset_url }}')
+});
+lightbox.init();
+</script>
