@@ -43,7 +43,7 @@
 
           <div class="cart__item-sub cart__item-row">
             <div class="cart__subtotal">{{ 'cart.general.subtotal' | t }}</div>
-            <div data-subtotal>{{ cart.total_price | money }}</div>
+            <span style="display: block; text-align: right;" class="saw-extra-note"></span><span class="saw-cart-original-total"><div data-subtotal>{{ cart.total_price | money }}</div></span><br><span class="saw-cart-total"></span>
           </div>
 
           <div class="cart__item-row cart__savings text-center hide" data-savings></div>
@@ -73,13 +73,7 @@
           <!-- END Route App -->
           
           <div class="cart__checkout-wrapper">
-            <button type="submit" name="checkout" data-terms-required="{{ settings.cart_terms_conditions_enable }}" class="btn cart__checkout">
-              {{ 'cart.general.checkout' | t }}
-            </button>
-
-            {% if additional_checkout_buttons and settings.cart_additional_buttons %}
-              <div class="additional-checkout-buttons additional-checkout-buttons--vertical">{{ content_for_additional_checkout_buttons }}</div>
-            {% endif %}
+            <a href="/cart" class="btn btn--full add-to-cart">Go to cart</a>
           </div>
         </div>
       </div>
@@ -91,4 +85,33 @@
       </div>
     </form>
   </div>
+
+  <script type="text/javascript">
+    window.onload = function() {
+        const config = { childList: true, subtree: true };
+        const targetNode = document.querySelector("#CartDrawer .drawer__inner .drawer__scrollable");
+        let cartDrawerTotalDiv = document.querySelector("#CartDrawer .saw-cart-original-total > div");
+
+        const callbackCartDrawer = (mutationList, observer) => {
+            for (const mutation of mutationList) {
+                if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                    let originalPrices = 0;
+                    let discountPrices = 0;
+                    let cartItems = document.querySelectorAll("#CartDrawer .cart__item");
+                    [...cartItems].forEach((item) => {
+                        let quantity = item.querySelector(".cart__item--qty .js-qty__wrapper > input").value;
+                        let originalPrice = (item.querySelector(".cart__price:not(.cart__discount):not(.cart__price--strikethrough)")) ? parseFloat(item.querySelector(".cart__price:not(.cart__discount)").innerHTML.split('$')[1]) : 0;
+                        let discountPrice = (item.querySelector(".cart__price.saw__price")) ? parseFloat(item.querySelector(".cart__price.saw__price").innerHTML.split('$')[1]) : 0;
+                        originalPrices += (originalPrice * quantity);
+                        discountPrices += (discountPrice * quantity);
+                    });
+                    document.querySelector(".saw-cart-original-total > div").innerHTML = `$${originalPrices + discountPrices}`;
+                }
+            }
+        };
+
+        const observerCartDrawer = new MutationObserver(callbackCartDrawer);
+        observerCartDrawer.observe(targetNode, config);
+    }
+  </script>
 {% endif %}

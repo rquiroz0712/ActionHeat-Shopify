@@ -20,6 +20,13 @@
       endcase
     -%}
     {%- for block in section.blocks -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: block %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
       {%- if section.blocks.size == 5 and forloop.index < 3 -%}
         {%- assign column_width = 'medium-up--one-half' -%}
       {%- else -%}

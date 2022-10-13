@@ -37,6 +37,13 @@
       Get first image's aspect ratio
     {% endcomment %}
     {%- for block in section.blocks limit: 1 -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: block %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
       {%- if block.settings.image != blank -%}
         {%- assign natural_height = true -%}
         {%- capture natural_height_ratio -%}{{ 100 | divided_by: block.settings.image.aspect_ratio }}%{%- endcapture -%}
@@ -87,6 +94,13 @@
       </div>
 
       {%- for block in section.blocks -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: block %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
         {%- if block.settings.image != blank -%}
           {%- assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
           <img class="fading-images__item fading-images__item--{{ block.id }} lazyload"

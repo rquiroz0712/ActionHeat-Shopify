@@ -1,4 +1,11 @@
 {% for sub_link in links %}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: sub_link %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
   {% if sub_link.url == '#' %}{% continue %}{% endif %}
 
   {%- assign tag_count = tag_count | plus: 1 -%}

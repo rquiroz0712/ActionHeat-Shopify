@@ -22,6 +22,13 @@
     <div class="grid">
       {%- assign row_width = 0 -%}
       {%- for block in section.blocks -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: block %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
         {%- assign row_width = row_width | plus: block.settings.container_width -%}
         {%- style -%}
         @media only screen and (min-width: 769px) {
@@ -73,6 +80,13 @@
                 </button>
                 <ul id="LangList" class="disclosure-list" data-disclosure-list>
                   {%- for locale in form.available_locales -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: locale %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
                     <li class="disclosure-list__item {% if locale.iso_code == form.current_locale.iso_code %}disclosure-list__item--current{% endif %}">
                       <a class="disclosure-list__option" href="#" lang="{{ locale.iso_code }}" {% if locale.iso_code == form.current_locale.iso_code %}aria-current="true"{% endif %} data-value="{{ locale.iso_code }}" data-disclosure-option>
                         {{ locale.endonym_name }}
@@ -103,6 +117,13 @@
                 </button>
                 <ul id="CurrencyList" class="disclosure-list" data-disclosure-list>
                   {%- for country in localization.available_countries-%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: country %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
                     <li class="disclosure-list__item {% if country.iso_code == localization.country.iso_code %}disclosure-list__item--current{% endif %}">
                       <a class="disclosure-list__option" href="#" {% if country.iso_code == localization.country.iso_code %}aria-current="true"{% endif %} data-value="{{ country.iso_code }}" data-disclosure-option>
                         {%- if section.settings.show_currency_flags -%}
@@ -126,6 +147,13 @@
         {%- unless shop.enabled_payment_types == empty -%}
           <ul class="inline-list payment-icons site-footer__bottom-block{% unless section.settings.colorize_payment_icons %} payment-icons--greyscale{% endunless %} text-center">
             {%- for type in shop.enabled_payment_types -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: type %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
               <li class="icon--payment">
                 {{ type | payment_type_svg_tag }}
               </li>

@@ -3,6 +3,13 @@
     <div class="gf-form-inner">
         {% assign next_select_show_values = false %}
         {% for filter in filters %}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: filter %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
         {% assign filter_label = filter.label | escape %}
         {% if translation.labels and translation.labels[filter.id] %}
         {% assign filter_label = translation.labels[filter.id] | escape %}
@@ -20,6 +27,13 @@
               <option value="">{{ translation.form.select | default: '-- Select --' }}</option>
               {% if filter.is_selected or forloop.first or next_select_show_values %}
               {% for value in filter.values %}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: value %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
               <option{% if value.selected %} selected{% endif %} value="{{value.value | replace:"\'", "\\\'" | escape}}">{{value.label | escape}}</option>
               {% endfor %}
               {% endif %}

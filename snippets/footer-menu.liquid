@@ -16,6 +16,13 @@
       <div class="footer__collapsible{% unless block.settings.show_footer_title %} footer_collapsible--disabled{% endunless %}">
         <ul class="no-bullets site-footer__linklist">
           {%- for link in linklists[block.settings.menu].links -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: link %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
             <li><a href="{{ link.url }}">{{ link.title }}</a></li>
           {%- endfor -%}
         </ul>

@@ -1,3 +1,8 @@
+{%- comment -%} Wholesale_Club_Product_Visibility_Resource_Page Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility" %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% render "wc_page_replacement" %}
+{%- else -%}
 {% assign collection_image = collection.image %}
 {% if collection.metafields.actionheat.custom_collection_image.value != blank %}
   {% assign collection_image = collection.metafields.actionheat.custom_collection_image.value %}
@@ -78,6 +83,13 @@
     %}
 
     {%- for block in section.blocks -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: block %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
       {%- assign block_index = forloop.index -%}
 
       {%- case block.type -%}
@@ -153,6 +165,9 @@
   }
 </script>
 
+
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_Resource_Page End {%- endcomment -%}
 {% schema %}
 {
   "name": "t:sections.main-collection.name",

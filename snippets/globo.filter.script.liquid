@@ -7,6 +7,13 @@
 {%- assign files_url  = 'product-1.png' | file_img_url: '50x' | split: 'product-1_50x.png' -%}
 {%- assign primary_locale = 'null' -%}
 {%- for locale in shop.published_locales -%}{%- if locale.primary -%}{%- assign primary_locale = locale.iso_code | json -%}{%- endif -%}{%- endfor -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: locale %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
 <style>.spf-filter-loading #gf-products > *:not(.spf-product--skeleton){visibility: hidden; opacity: 0}</style>
 <script>
   document.getElementsByTagName('html')[0].classList.add('spf-filter-loading');
@@ -69,7 +76,7 @@
       id: globo_filters_json[page_id] || globo_filters_json['default'] || 0,
       layout: 1,
       showCount: true,
-      isLoadMore: 1,
+      isLoadMore: 2,
       filter_on_search_page: true
     },
     search:{
@@ -81,7 +88,14 @@
       id: {%- if request.page_type == 'collection' -%}{{ collection.id | default: 0 }}{%- else -%}0{%- endif -%},
       handle: {%- if request.page_type == 'collection' -%}'{{ collection.handle }}'{%- else -%}''{%- endif -%},
       sort: {% if request.page_type contains 'collection' %}"{{ collection.default_sort_by | default: 'best-selling' }}"{% elsif request.page_type contains 'search' %}'relevance'{% else %}'best-selling'{% endif %},
-      tags: {% if current_tags %}[{% for tag in current_tags %}{{ tag | json }},{{ tag | handle | json }}{% unless forloop.last %},{% endunless %}{% endfor %}]{% else %}null{% endif %},
+      tags: {% if current_tags %}[{% for tag in current_tags %}{{ tag | json }},{{ tag | handle | json }}{% unless forloop.last %},{% endunless %}{% endfor %}]{% else %}null{% endif %}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: tag %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+,
       vendor: {{ collection.current_vendor | json }},
       type: {{ collection.current_type | json }},
       term: {{ search.terms | escape | json }},

@@ -93,6 +93,13 @@
       </div>
 
       {%- for address in customer.addresses -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: address %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
         {% if address == customer.default_address %}
           <p class="h4">{{ 'customer.addresses.default' | t }}</p>
         {% endif %}

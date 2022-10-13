@@ -1,3 +1,8 @@
+{%- comment -%} Wholesale_Club_Product_Visibility_Resource_Page Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility" %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% render "wc_page_replacement" %}
+{%- else -%}
 {%- liquid
   assign isModal = false
   if template == 'product.modal'
@@ -20,6 +25,9 @@
   video_style: section.settings.product_video_style
 -%}
 
+
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_Resource_Page End {%- endcomment -%}
 {% schema %}
 {
   "name": "t:sections.main-product.name",

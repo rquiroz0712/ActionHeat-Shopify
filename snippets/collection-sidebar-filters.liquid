@@ -1,8 +1,22 @@
 <ul class="no-bullets tag-list tag-list--active-tags">
   {%- for filter in collection.filters -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: filter %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
     {%- assign filter_index = forloop.index -%}
 
     {%- for filter_value in filter.active_values -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: filter_value %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
       <li class="tag tag--remove">
         <a class="btn btn--small btn--no-animate" href="{{ filter_value.url_to_remove }}">
           {{ filter_value.label | escape }}
@@ -15,6 +29,13 @@
 
 <form class="filter-form">
   {%- for filter in collection.filters -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: filter %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
     {%- capture filter_id -%}filter-{{ filter.label | handleize }}{%- endcapture -%}
     {%- assign filter_index = forloop.index -%}
     {%- assign collapsed_state = section.settings.collapsed -%}
@@ -52,6 +73,13 @@
                 <ul class="no-bullets tag-list">
                   {%- assign tag_count = filter.values.size -%}
                   {%- for filter_value in filter.values -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: filter_value %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
                     {%- liquid
                       assign tag_count = tag_count | plus: 1
                       assign filter_value_index = forloop.index

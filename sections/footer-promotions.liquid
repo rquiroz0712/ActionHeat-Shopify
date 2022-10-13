@@ -24,6 +24,13 @@
         <div class="page-width footer-promotions">
           <div class="grid grid--flush-bottom">
             {%- for block in section.blocks -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: block %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
               <div class="grid__item {{ grid_item_width }} text-{{ section.settings.align_text }}" {{ block.shopify_attributes }} data-aos="row-of-3">
                 {%- if block.settings.enable_image -%}
                   <div style="{% if section.settings.align_text == 'center' %}margin: 0 auto;{% endif %} max-width: {{ block.settings.image_width }}px;">

@@ -1,3 +1,19 @@
+{% assign saw_discount = 0 %}
+  {% if customer != blank %}
+    {% assign saw_has_discount = false %}
+    {% if product.product %}{% assign base_product = product.product %}{% else %}{% assign base_product = product %}{% endif %}
+  	{% for mf in base_product.metafields.sawholesale %}
+      {% capture product_customer_tag %}{{ mf | first | replace: 'discount_', '' }}{% endcapture %}
+
+      {% if customer.tags contains product_customer_tag %}
+        {% assign saw_has_discount = true %}
+        {% assign discount_key = product_customer_tag | prepend: 'discount_' %}
+        {% assign price_key = product_customer_tag | prepend: 'price_' %}
+        {% assign saw_discount = base_product.metafields.sawholesale[discount_key] | divided_by: 100.0 %}
+      {% endif %}
+  	{% endfor %}
+  {% endif %}
+{% assign saw_discount = 1 | minus: saw_discount %}
 <div class="cart__item" data-key="{{ product.key }}">
   <div class="cart__item--image" data-aos>
     <a href="{{ product.url }}" class="image-wrap" style="display: block; height: 0; padding-bottom: {{ 100 | divided_by: product.image.aspect_ratio }}%;">
@@ -75,11 +91,15 @@
       </div>
     </div>
     <div class="cart__item--price cart__item-price-col text-right">
-      {%- if product.original_price != product.final_price -%}
+      {%- if saw_has_discount -%}
         <span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
         <small class="cart__price cart__price--strikethrough">{{ product.original_price | money }}</small>
         <span class="visually-hidden">{{ 'products.general.sale_price' | t }}</span>
+        {% if product.original_price != product.final_price %}
         <span class="cart__price cart__discount">{{ product.final_price | money }}</span>
+        {% else %}
+        <span class="cart__price cart__discount saw__price" has-discount">{{ product.final_price | times: saw_discount | ceil | money }}</span>
+        {% endif %}
       {%- else -%}
         <span class="cart__price">{{ product.original_price | money }}</span>
       {%- endif -%}

@@ -11,6 +11,13 @@
       <div class="product__main-photos" data-aos data-product-single-media-group>
         <div data-product-photos class="product-slideshow" id="ProductPhotos-{{ section_id }}">
           {%- for media in product.media -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: media %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
             {%- render 'media',
               section_id: section_id,
               media: media,
@@ -61,6 +68,13 @@
         <div class="product__thumbs--scroller">
           {%- if product.media.size > 1 -%}
             {%- for media in product.media -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: media %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
               {%- liquid
                 assign image_set = false
                 assign image_set_group = ''

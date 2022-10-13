@@ -11,6 +11,13 @@ Using a universal USB 5V battery technology, ActionHeat allows you to convenient
 <br>Do you sell online? If so, please send website links.<br>Do you sell on Amazon? If so, what is your store name?
 <br>Where are you located?
 <br><br><br></span></h3><div data-pf-type="Form2" class="sc-hKumaY AvNUs pf-76_">{% form "customer" %}{% for field in form.errors %}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: field %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
 				{% if field == "form" %}<p class="sc-eTwdGJ ckxrLb">Sorry, the submission can not be sent! Please try again later!</p>{{ form.errors.messages[field] }}
 				{% endif %}
 				{% if form.errors.messages[field] contains "can't be blank." %}<p class="sc-eTwdGJ ckxrLb">Field can not be blank</p>{% else %}<p class="sc-eTwdGJ ckxrLb">Sorry, the submission can not be sent! Please try again later!</p>{% endif %}

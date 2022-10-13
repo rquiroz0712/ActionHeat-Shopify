@@ -136,6 +136,13 @@
             poster="{{ media.preview_image | img_url: product_image_size }}"
             class="hide product-video-mp4-sound">
             {%- for source in media.sources -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: source %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
               <source src="{{ source.url }}" type="{{ source.mime_type }}">
             {%- endfor -%}
             Your browser does not support the video tag.
@@ -175,6 +182,13 @@
                 id="ProductVideo-{{ section_id }}-{{ loopIndex }}"
                 class="product__video">
                 {%- for source in media.sources -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: source %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
                   <source src="{{ source.url }}" type="{{ source.mime_type }}">
                 {%- endfor -%}
                 Your browser does not support the video tag.

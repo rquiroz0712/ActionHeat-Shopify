@@ -10,6 +10,13 @@
 {% capture filter_tree_html %}
   {% if filters %}
     {% for filter in filters %}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: filter %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
 
       {% assign filter_label = filter.label | escape %}
       {% if translation.labels and translation.labels[filter.id] %}
@@ -85,6 +92,13 @@
           <select onchange="toggleRadioFilter({{filter.id}}, this.value)">
             <option value="">{{ translation.filter.choose_values | default: "Choose values"}}</option>
             {% for value in filter.values %}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: value %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
               {% if filter.attribute == 'Ready to ship' %}
               {% assign value_label = ready_to_ship_label %}
             {% elsif filter.attribute == 'Availability' %}
@@ -106,6 +120,13 @@
                         {% if filter.style == 'Rating' %}
                         <span class="gf-label gf-stars">
                           {% for star in (1..5) %}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: star %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
                             {% if star <= value.value %}
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5.2 18a.8.8 0 01-.792-.914l.743-5.203-2.917-2.917a.8.8 0 01.434-1.355l4.398-.733 2.218-4.435a.8.8 0 011.435.008l2.123 4.361 4.498.801a.8.8 0 01.425 1.353l-2.917 2.917.744 5.203a.8.8 0 01-1.154.828l-4.382-2.22-4.502 2.223A.792.792 0 015.2 18z" fill="#ff9800"/></svg>
                             {% else %}
@@ -134,6 +155,13 @@
               {% assign collection_id = {% endraw %}{{collection.id | default: 0}}{% raw %} %}
               {% if filter.tree %}
                 {% for node in filter.tree %}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: node %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
 
                   {% if node.selected %}
                     {% capture selected_item_html %}
@@ -174,6 +202,13 @@
                     {% if node.children %}
                     <ul{% if node.is_collapse %} style="display:none"{% endif %}>
                       {% for child in node.children %}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: child %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
 
                         {% if child.selected %}
                           {% capture selected_item_html %}
@@ -214,6 +249,13 @@
                           {% if child.children %}
                             <ul{% if child.is_collapse %} style="display:none"{% endif %}>
                               {% for child2 in child.children %}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: child2 %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
 
                                 {% if child2.selected %}
                                   {% capture selected_item_html %}
@@ -254,6 +296,13 @@
                                   {% if child2.children %}
                                     <ul{% if child.is_collapse %} style="display:none"{% endif %}>
                                       {% for child3 in child2.children %}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: child3 %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
 
                                         {% if child3.selected %}
                                           {% capture selected_item_html %}
@@ -304,6 +353,13 @@
                 {% endfor %}
               {% else %}
                 {% for value in filter.values %}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: value %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
 
                 {% if value.selected %}
                   {% capture selected_item_html %}
@@ -351,6 +407,13 @@
               {% endif %}
             {% else %}
               {% for value in filter.values %}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: value %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
                 {% if filter.attribute == 'Ready to ship' %}
                   {% assign value_label = ready_to_ship_label %}
                 {% elsif filter.attribute == 'Availability' %}
@@ -373,6 +436,13 @@
                             {% if filter.style == 'Rating' %}
                             <span class="gf-label gf-stars">
                               {% for star in (1..5) %}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: star %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
                                 {% if star <= value.value %}
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5.2 18a.8.8 0 01-.792-.914l.743-5.203-2.917-2.917a.8.8 0 01.434-1.355l4.398-.733 2.218-4.435a.8.8 0 011.435.008l2.123 4.361 4.498.801a.8.8 0 01.425 1.353l-2.917 2.917.744 5.203a.8.8 0 01-1.154.828l-4.382-2.22-4.502 2.223A.792.792 0 015.2 18z" fill="#ff9800"/></svg>
                                 {% else %}
@@ -419,6 +489,13 @@
                     <a{% if value.selected %} class="checked"{% endif %} onclick="toggleCheckboxFilter({{filter.id}},'{{value.value | replace:"\\", "\\\\" | replace:"\'", "\\\'" | escape}}')" title="{{value_label}}">
                       <span class="gf-label gf-stars">
                         {% for star in (1..5) %}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: star %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
                           {% if star <= value.value %}
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5.2 18a.8.8 0 01-.792-.914l.743-5.203-2.917-2.917a.8.8 0 01.434-1.355l4.398-.733 2.218-4.435a.8.8 0 011.435.008l2.123 4.361 4.498.801a.8.8 0 01.425 1.353l-2.917 2.917.744 5.203a.8.8 0 01-1.154.828l-4.382-2.22-4.502 2.223A.792.792 0 015.2 18z" fill="#ff9800"/></svg>
                           {% else %}

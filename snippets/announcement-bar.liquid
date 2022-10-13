@@ -30,6 +30,13 @@
         </a>
       {% endif %}
       {% for block in section.blocks %}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: block %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
         {% if block.type == 'announcement_bar_section' %}
           {% if block.settings.announcement_section_url != blank %}
             <a href="{{ block.settings.announcement_section_url }}" class="announcement__link">

@@ -10,6 +10,13 @@
       id="SingleOptionSelector-{{ section_id }}-{{ product.id }}-option-{{ forloop.index0 }}"
       data-index="option{{ forloop.index }}">
       {%- for value in option.values -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: value %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
         {%- assign variant_label_state = true -%}
         {% if product.options.size == 1 %}
           {% unless product.variants[forloop.index0].available %}

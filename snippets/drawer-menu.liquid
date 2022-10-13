@@ -22,6 +22,13 @@
     <div class="drawer__scrollable">
       <ul class="mobile-nav" role="navigation" aria-label="Primary">
         {%- for link in main_menu.links -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: link %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
           {%- liquid
             assign animation_row = animation_row | plus: 1
             assign child_list_handle = link.url | handleize | append: forloop.index
@@ -87,6 +94,13 @@
                 <div class="collapsible-content__inner">
                   <ul class="mobile-nav__sublist">
                     {%- for childlink in link.links -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: childlink %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
                       {%- assign has_sub_dropdown = false -%}
                       {%- assign grand_child_list_handle = childlink.url | handleize | append: forloop.index -%}
                       {%- if childlink.links != blank -%}
@@ -126,6 +140,13 @@
                             <div class="collapsible-content__inner">
                               <ul class="mobile-nav__grandchildlist">
                                 {%- for grandchildlink in childlink.links -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop Start {%- endcomment -%}
+{%- capture hide_resource -%}{% render "wc_product_visibility", resource: grandchildlink %}{%- endcapture -%}
+{%- if hide_resource == "true" -%}
+  {% continue %}
+{%- endif -%}
+{%- comment -%} Wholesale_Club_Product_Visibility_For_Loop End {%- endcomment -%}
+
                                   <li class="mobile-nav__item{% unless template == 'index' %}{% if grandchildlink.active %} mobile-nav__item--active{% endif %}{% endunless %}">
                                     <a href="{{ grandchildlink.url }}" class="mobile-nav__link">
                                       {{ grandchildlink.title }}
